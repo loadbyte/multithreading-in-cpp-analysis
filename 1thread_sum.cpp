@@ -31,7 +31,7 @@ int main()
 	th1.join(); 
 
 	
-   cout<< total <<endl;
+
    cout << "main thread ends" << endl; 
    auto end = chrono::high_resolution_clock::now(); 
 
