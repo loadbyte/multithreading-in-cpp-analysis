@@ -10,9 +10,8 @@ using namespace std;
 std::atomic<unsigned long long> total {0};
 
 // sum function 
-void sum(long start, long end) 
+void sum( long start, long end) 
 { 
-   unsigned long long cnt = 0;
 	for (int i = start; i < end; i++) { 
 		total+=i;
 	} 
@@ -20,6 +19,7 @@ void sum(long start, long end)
 } 
 int main() 
 { 
+
 	auto start = chrono::high_resolution_clock::now(); 
 
 	// unsync the I/O of C and C++. 
@@ -29,7 +29,7 @@ int main()
 
 	thread th1(sum, 1,33333333); 
 	thread th2(sum, 33333334,66666666); 
-	thread th3(sum, 66666665,1000000000);  
+	thread th3(sum, 66666667,1000000000);  
 
 
 	// Wait for the threads to finish 

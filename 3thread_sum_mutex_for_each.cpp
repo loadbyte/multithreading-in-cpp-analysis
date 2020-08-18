@@ -5,24 +5,25 @@
 #include <atomic>
 #include <bits/stdc++.h> 
 #include <chrono> 
+#include <mutex>
 using namespace std; 
 
-std::atomic<unsigned long long> total {0};
 
+unsigned long long total =0;
+std::mutex m;
 // sum function 
-void sum(long start, long end) 
+void sum( long start, long end) 
 { 
-   unsigned long long cnt = 0;
+    
 	for (int i = start; i < end; i++) { 
-		cnt+=i;
+	   std::lock_guard<std::mutex> lockGuard(m);
+		total+=i;
 	} 
-	total+=cnt;
 	cout << "sum thread ends" << endl; 
 } 
-
-
 int main() 
 { 
+
 	auto start = chrono::high_resolution_clock::now(); 
 
 	// unsync the I/O of C and C++. 
@@ -30,10 +31,10 @@ int main()
 
 	cout << "main thread starts" << endl; 
 
-
 	thread th1(sum, 1,33333333); 
 	thread th2(sum, 33333334,66666666); 
-	thread th3(sum, 66666667,1000000000); 
+	thread th3(sum, 66666667,1000000000);  
+
 
 	// Wait for the threads to finish 
 	th1.join(); 
